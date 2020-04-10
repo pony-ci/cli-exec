@@ -1,0 +1,39 @@
+{
+  "name": "@pony-ci/cli-exec",
+  "version": "1.0.0",
+  "description": "shell cli execution in node",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepack": "rm -rf lib && tsc -b",
+    "watch": "rm -rf lib && tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pony-ci/cli-exec.git"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.18",
+    "ts-node": "^8",
+    "tslint": "^5",
+    "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "keywords": [
+    "pony",
+    "cli",
+    "exec",
+    "shell",
+    "cmd",
+    "node",
+    "ts",
+    "typescript"
+  ],
+  "author": "Ondřej Kratochvíl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pony-ci/cli-exec/issues"
+  },
+  "homepage": "https://github.com/pony-ci/cli-exec#readme"
+}
