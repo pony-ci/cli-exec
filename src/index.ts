@@ -63,7 +63,7 @@ export function build(name: string, ...options: Options[]): string {
  *
  * buildArgs({version: true});
  *
- * buildArgs('java', '-version');
+ * buildArgs('-version');
  *
  * @param options the command options
  */
@@ -113,9 +113,9 @@ class Command {
      *
      * Examples:
      *
-     * exec('npm', {version: true});
+     * cmd('npm').build({version: true});
      *
-     * exec('java', '-version');
+     * cmd('java').build('-version');
      *
      * @param options the command options
      */
