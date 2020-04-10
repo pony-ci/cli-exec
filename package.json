@@ -1,6 +1,6 @@
 {
   "name": "@pony-ci/cli-exec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "shell cli execution in node",
   "main": "lib/index.js",
   "scripts": {

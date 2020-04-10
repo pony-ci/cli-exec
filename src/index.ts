@@ -43,23 +43,11 @@ export function cmd(name: string, options: CommandOptions = {}): Command {
 /**
  * Build a command as a string without executing it.
  *
- * First option can contains values to override command behaviour.
- * <ul>
- *  <li>cwd - (default, process.cwd()), the current working directory</li>
- *  <li>printCommand - (default: true), print command before execution,
- *  command is not printed if quiet is set to true </li>
- *  <li>quiet - (default: false), suppress stdout and stderr</li>
- * </ul>
+ * Examples:
  *
- * Examples
+ * build('npm', {version: true});
  *
- * exec('npm', {v: true});
- *
- * exec('npm', {version: true});
- *
- * exec('java', ['-version']);
- *
- * exec('npm', {quiet: true}, 'install'); // stdout and stderr suppressed
+ * build('java', '-version');
  *
  * @param name of the command
  * @param options the command options
@@ -69,25 +57,28 @@ export function build(name: string, ...options: Options[]): string {
 }
 
 /**
+ * Build command args as a string array without executing it.
+ *
+ * Examples:
+ *
+ * buildArgs({version: true});
+ *
+ * buildArgs('java', '-version');
+ *
+ * @param options the command options
+ */
+export function buildArgs(...options: Options[]): string[] {
+    return cmd('').buildArgs(...options);
+}
+
+/**
  * Execute a command.
  *
- * First option can contains values to override command behaviour.
- * <ul>
- *  <li>cwd - (default, process.cwd()), the current working directory</li>
- *  <li>printCommand - (default: true), print command before execution,
- *  command is not printed if quiet is set to true </li>
- *  <li>quiet - (default: false), suppress stdout and stderr</li>
- * </ul>
- *
- * Examples
- *
- * exec('npm', {v: true});
+ * Examples:
  *
  * exec('npm', {version: true});
  *
- * exec('java', ['-version']);
- *
- * exec('npm', {quiet: true}, 'install'); // stdout and stderr suppressed
+ * exec('java', '-version');
  *
  * @param name of the command
  * @param options the command options
@@ -120,23 +111,11 @@ class Command {
     /**
      * Build the command as a string without executing it.
      *
-     * First option can contains values to override command behaviour.
-     * <ul>
-     *  <li>cwd - (default, process.cwd()), the current working directory</li>
-     *  <li>printCommand - (default: true), print command before execution,
-     *  command is not printed if quiet is set to true </li>
-     *  <li>quiet - (default: false), suppress stdout and stderr</li>
-     * </ul>
-     *
-     * Examples
-     *
-     * exec('npm', {v: true});
+     * Examples:
      *
      * exec('npm', {version: true});
      *
-     * exec('java', ['-version']);
-     *
-     * exec('npm', {quiet: true}, 'install'); // stdout and stderr suppressed
+     * exec('java', '-version');
      *
      * @param options the command options
      */
@@ -146,25 +125,28 @@ class Command {
     }
 
     /**
+     * Build command args as a string array without executing it.
+     *
+     * Examples:
+     *
+     * cmd('npm').buildArgs({version: true});
+     *
+     * cmd('java').buildArgs('-version');
+     *
+     * @param options the command options
+     */
+    public buildArgs(...options: Options[]): string[] {
+        return transformOptions(options, this.transform).args;
+    }
+
+    /**
      * Execute the command.
      *
-     * First option can contains values to override command behaviour.
-     * <ul>
-     *  <li>cwd - (default, process.cwd()), the current working directory</li>
-     *  <li>printCommand - (default: true), print command before execution,
-     *  command is not printed if quiet is set to true </li>
-     *  <li>quiet - (default: false), suppress stdout and stderr</li>
-     * </ul>
-     *
-     * Examples
-     *
-     * cmd('npm').exec({v: true});
+     * Examples:
      *
      * cmd('npm').exec({version: true});
      *
-     * cmd('java').exec(['-version']);
-     *
-     * cmd('npm').exec({quiet: true}, 'install'); // stdout and stderr suppressed
+     * cmd('java').exec('-version');
      *
      * @param options the command options
      */
