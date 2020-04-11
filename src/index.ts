@@ -1,4 +1,5 @@
 import {spawn, SpawnOptions} from 'child_process';
+import fs from 'fs-extra';
 
 export interface ObjectOption {
     [key: string]: string | boolean | number | undefined | null;
@@ -181,6 +182,16 @@ async function spawnProcess(bin: string, args: string[], quiet: boolean, cwd: st
         spawned.on('exit', (exitCode) => {
             exitCode === 0 ? resolve() : reject(new Error(`Exit with code: ${exitCode}`));
         });
+        spawned.on('error', (err: any) => {
+            try {
+                fs.statSync(cwd);
+            } catch (e) {
+                if (e.code === 'ENOENT') {
+                    reject(`The specified cwd does not exist: ${cwd}`);
+                }
+            }
+            reject(err);
+        });
     });
 }
 
@@ -219,8 +230,7 @@ function transformFirstOption(opt: ObjectOption, transform: TransformOption): Ar
         args: [],
     };
     const filteredOption: Option = {};
-    Object.keys(opt).forEach((flagName) => {
-        const flagValue = opt[flagName];
+    Object.entries(opt).forEach(([flagName, flagValue]) => {
         if (flagName === 'quiet') {
             argsObj.quiet = flagValue === true;
         } else if (flagName === 'printCommand') {
@@ -237,16 +247,21 @@ function transformFirstOption(opt: ObjectOption, transform: TransformOption): Ar
 
 function defaultTransform(opt: ObjectOption): string[] {
     const args: string[] = [];
-    Object.keys(opt).forEach((flagName) => {
-        const flagValue = opt[flagName];
-        if (isBoolean(flagValue) && flagValue === true) {
-            if (flagName.length === 1) {
-                args.push(`-${flagName}`);
-            } else {
-                args.push(`--${flagName}`);
+    Object.entries(opt).forEach(([flagName, flagValue]) => {
+        if (isBoolean(flagValue)) {
+            if (flagValue === true) {
+                if (flagName.length === 1) {
+                    args.push(`-${flagName}`);
+                } else {
+                    args.push(`--${flagName}`);
+                }
             }
-        } else if (!isBoolean(flagValue) && flagValue) {
-            args.push(`--${flagName}`, `${flagValue}`);
+        } else if (flagValue) {
+            if (flagName.length === 1) {
+                args.push(`-${flagName}`, `${flagValue}`);
+            } else {
+                args.push(`--${flagName}`, `${flagValue}`);
+            }
         }
     });
     return args;
