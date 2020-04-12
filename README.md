@@ -1,6 +1,7 @@
 # cli-exec
 
 [![npm version](https://badge.fury.io/js/%40pony-ci%2Fcli-exec.svg)](https://badge.fury.io/js/%40pony-ci%2Fcli-exec)
+[![pony-ci](https://circleci.com/gh/pony-ci/cli-exec.svg?style=shield)](https://circleci.com/gh/pony-ci/cli-exec)
 
 Execute CLI commands in node.
 
