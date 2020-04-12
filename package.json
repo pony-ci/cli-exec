@@ -14,10 +14,7 @@
     "url": "git+https://github.com/pony-ci/cli-exec.git"
   },
   "files": [
-    "/lib",
-    "/messages",
-    "/npm-shrinkwrap.json",
-    "/oclif.manifest.json"
+    "/lib"
   ],
   "dependencies": {
     "fs-extra": "^8.1.0"
