@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: rm -rf lib && tsc -b
+            - run: rm -rf lib && node_modules/bin/tsc -b
             - run: npm test
 workflows:
     build-and-test:
