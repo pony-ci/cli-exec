@@ -23,12 +23,6 @@
     ],
     "eofline": false,
     "function-name": false,
-    "export-name": [
-      true,
-      {
-        "ignore-case": true
-      }
-    ],
     "forin": false,
     "interface-name": false,
     "import-name": false,
@@ -74,6 +68,11 @@
       "object-destructuring",
       "array-destructuring"
     ],
-    "trailing-comma": false
+    "trailing-comma": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore"
+    ]
   }
 }

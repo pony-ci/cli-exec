@@ -12,6 +12,7 @@ jobs:
             - run: npm install
             - run: rm -rf lib && node_modules/.bin/tsc -b
             - run: npm test
+            - run: npm run lint
 workflows:
     build-and-test:
       jobs:
