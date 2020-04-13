@@ -23,12 +23,6 @@
     ],
     "eofline": false,
     "function-name": false,
-    "export-name": [
-      true,
-      {
-        "ignore-case": true
-      }
-    ],
     "forin": false,
     "interface-name": false,
     "import-name": false,
