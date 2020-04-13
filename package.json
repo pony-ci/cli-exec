@@ -7,6 +7,7 @@
   "scripts": {
     "prepack": "rm -rf lib && tsc -b",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "lint": "tslint src/**/*.ts",
     "watch": "rm -rf lib && tsc --watch"
   },
   "repository": {

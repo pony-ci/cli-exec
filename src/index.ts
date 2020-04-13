@@ -93,15 +93,15 @@ export async function exec(name: string, ...options: Options[]): Promise<any> {
  *
  * Includes methods build and exec.
  */
-class Command {
+export class Command {
 
     public transform: TransformOption = defaultTransform;
-    private readonly name: string;
-    private options: CommandOptions;
+    private readonly _name: string;
+    private readonly _options: CommandOptions;
 
     constructor(name: string, options: CommandOptions = {}) {
-        this.name = name;
-        this.options = {
+        this._name = name;
+        this._options = {
             cwd: process.cwd(),
             printCommand: true,
             quiet: false,
@@ -122,7 +122,7 @@ class Command {
      */
     public build(...options: Options[]): string {
         const argsObj: ArgsObject = transformOptions(options, this.transform);
-        return `${this.name} ${argsObj.args.join(' ')}`;
+        return `${this._name} ${argsObj.args.join(' ')}`;
     }
 
     /**
@@ -153,14 +153,14 @@ class Command {
      */
     public async exec(...options: Options[]): Promise<any> {
         const argsObj: ArgsObject = transformOptions(options, this.transform);
-        const quiet = isBoolean(argsObj.quiet) ? argsObj.quiet : this.options.quiet;
-        const printCommand = isBoolean(argsObj.printCommand) ? argsObj.printCommand : this.options.printCommand;
-        const cwd = argsObj.cwd ? argsObj.cwd : this.options.cwd;
-        const execCommand = `${this.name} ${argsObj.args.join(' ')}`;
+        const quiet = isBoolean(argsObj.quiet) ? argsObj.quiet : this._options.quiet;
+        const printCommand = isBoolean(argsObj.printCommand) ? argsObj.printCommand : this._options.printCommand;
+        const cwd = argsObj.cwd ? argsObj.cwd : this._options.cwd;
+        const execCommand = `${this._name} ${argsObj.args.join(' ')}`;
         if (!quiet && printCommand) {
             console.log(`$ ${execCommand}`);
         }
-        return spawnProcess(this.name, argsObj.args, quiet, cwd);
+        return spawnProcess(this._name, argsObj.args, quiet, cwd);
     }
 }
 
@@ -266,3 +266,7 @@ function defaultTransform(opt: ObjectOption): string[] {
     });
     return args;
 }
+
+export * from './commands/eslint';
+export * from './commands/npm';
+export * from './commands/npx';

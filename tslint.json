@@ -74,6 +74,11 @@
       "object-destructuring",
       "array-destructuring"
     ],
-    "trailing-comma": false
+    "trailing-comma": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore"
+    ]
   }
 }

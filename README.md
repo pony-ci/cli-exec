@@ -72,6 +72,26 @@ await npm.exec('install', {printCommand: true});
 | printCommand | print command being executed             | true          |
 | quiet        | suppress printCommand, stdout and stderr | false         |
 
+## Default implementations
+This module includes some common commands.
+
+#### eslint
+```javascript
+await eslint('src/**/*.js');
+```
+
+#### npm
+```javascript
+await npm.install();
+await npm.test();
+await npm.publish('--dry-run');
+```
+
+#### npx
+```javascript
+await npx('eslint', 'src/**/*.js');
+```
+
 ## License
 This software is released under the [MIT License](https://github.com/pony-ci/cli-exec/blob/master/LICENSE).
 
