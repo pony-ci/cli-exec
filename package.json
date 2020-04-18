@@ -1,6 +1,6 @@
 {
   "name": "@pony-ci/cli-exec",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Execute CLI commands in node.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -14,9 +14,6 @@
     "type": "git",
     "url": "git+https://github.com/pony-ci/cli-exec.git"
   },
-  "files": [
-    "/lib"
-  ],
   "dependencies": {
     "fs-extra": "^8.1.0"
   },
@@ -33,7 +30,7 @@
     "typescript": "^3.8.3"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.0.0"
   },
   "keywords": [
     "pony",
