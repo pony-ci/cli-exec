@@ -1,19 +1,23 @@
-import {expect} from 'chai';
+import {expect, should, use} from 'chai';
 import {build, buildArgs, cmd, exec} from '../lib';
 
+should();
+// tslint:disable-next-line:no-var-requires
+use(require('chai-as-promised'));
+
 describe('build, buildArgs and cmd', () => {
-    it('build', async () => {
-        const result = await build('docker', 'run', {rm: true}, 'hello-world');
-        expect(result).to.eq('docker run --rm hello-world');
+    it('build', () => {
+        const test = build('docker', 'run', {rm: true}, 'hello-world');
+        expect(test).to.eq('docker run --rm hello-world');
     });
 
-    it('build from array', async () => {
-        const result = await build('docker', ['run', {h: true}, {name: 'value'}, {n: 'v'}, 'hello-world']);
+    it('build from array', () => {
+        const result = build('docker', ['run', {h: true}, {name: 'value'}, {n: 'v'}, 'hello-world']);
         expect(result).to.eq('docker run -h --name value -n v hello-world');
     });
 
-    it('build multiple options', async () => {
-        const result = await build('docker', 'run', {h: true, name: 'value', n: 'v'}, 'hello-world');
+    it('build multiple options', () => {
+        const result = build('docker', 'run', {h: true, name: 'value', n: 'v'}, 'hello-world');
         expect(result).to.contain('docker run ');
         expect(result).to.contain(' -h ');
         expect(result).to.contain(' --name value ');
@@ -21,7 +25,7 @@ describe('build, buildArgs and cmd', () => {
         expect(result).to.contain(' hello-world');
     });
 
-    it('build args', async () => {
+    it('build args', () => {
         const result = buildArgs('run', {rm: true}, 'hello-world');
         expect(result.length).to.eq(3);
         expect(result[0]).to.eq('run');
@@ -29,13 +33,13 @@ describe('build, buildArgs and cmd', () => {
         expect(result[2]).to.eq('hello-world');
     });
 
-    it('cmd.build', async () => {
+    it('cmd.build', () => {
         const docker = cmd('docker');
-        const result = await docker.build('run', {rm: true}, 'hello-world');
+        const result = docker.build('run', {rm: true}, 'hello-world');
         expect(result).to.eq('docker run --rm hello-world');
     });
 
-    it('cmd.build with transform', async () => {
+    it('cmd.build with transform', () => {
         const myCmd = cmd('mycmd', {
             quiet: true
         });
@@ -55,7 +59,7 @@ describe('build, buildArgs and cmd', () => {
         expect(result).to.eq('mycmd --name=value');
     });
 
-    it('options', async () => {
+    it('options', () => {
         const npm = cmd('npm', {
             cwd: '/home/user/workspace/my-npm-project',
             printCommand: false
@@ -66,40 +70,30 @@ describe('build, buildArgs and cmd', () => {
         expect(result2).to.eq('npm install --printCommand');
     });
 
-    it('non existing cwd', async () => {
-        try {
-            await exec('npm', {
-                cwd: '/home/user/workspace/my-npm-project'
-            }, 'install');
-            throw Error('exception expected');
-        } catch (e) {
-            expect(e).to.eq('The specified cwd does not exist: /home/user/workspace/my-npm-project');
-        }
-    });
+    it('non existing cwd', () => exec('npm', {
+            cwd: '/home/user/workspace/my-npm-project'
+        }, 'install')
+            .should.eventually.be
+            .rejectedWith('The specified cwd does not exist: /home/user/workspace/my-npm-project')
+    );
 
-    it('non existing cwd on cmd instance', async () => {
+    it('non existing cwd on cmd instance', () => {
         const npm = cmd('npm', {
             cwd: '/home/user/workspace/my-npm-project'
         });
-        try {
-            await npm.exec('install');
-            throw Error('exception expected');
-        } catch (e) {
-            expect(e).to.eq('The specified cwd does not exist: /home/user/workspace/my-npm-project');
-        }
+        npm.exec('install')
+            .should.eventually.be
+            .rejectedWith('The specified cwd does not exist: /home/user/workspace/my-npm-project');
     });
 
-    it('override cwd', async () => {
+    it('override cwd', () => {
         const npm = cmd('npm', {
             cwd: '/home/user/npm-project'
         });
-        try {
-            await npm.exec({
+        npm.exec({
                 cwd: '/home/user/another-project'
-            }, 'install');
-            throw Error('exception expected');
-        } catch (e) {
-            expect(e).to.eq('The specified cwd does not exist: /home/user/another-project');
-        }
+            }, 'install')
+            .should.eventually.be
+            .rejectedWith('The specified cwd does not exist: /home/user/another-project');
     });
 });
