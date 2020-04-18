@@ -60,9 +60,9 @@ const npm = cmd('npm', {
 // the command options can be overridden during execution
 // they must be passed as first option
 await npm.exec({printCommand: true}, 'install');
-// executes 'npm install' without printing the command
+// executes 'npm install' with printing the command
 await npm.exec('install', {printCommand: true});
-// executes 'npm install --printCommand' with printing the command
+// executes 'npm install --printCommand' without printing the command
 ```
 
 #### Options overview
