@@ -1,7 +1,9 @@
 # cli-exec
 
-[![npm version](https://badge.fury.io/js/%40pony-ci%2Fcli-exec.svg)](https://badge.fury.io/js/%40pony-ci%2Fcli-exec)
-[![pony-ci](https://circleci.com/gh/pony-ci/cli-exec.svg?style=shield)](https://circleci.com/gh/pony-ci/cli-exec)
+[![CircleCI](https://circleci.com/gh/pony-ci/cli-exec.svg)](https://circleci.com/gh/pony-ci/cli-exec)
+[![npm](https://badge.fury.io/js/%40pony-ci%2Fcli-exec.svg)](https://badge.fury.io/js/%40pony-ci%2Fcli-exec)
+[![License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/pony-ci/cli-exec/blob/master/LICENSE)
+
 
 Execute CLI commands in node.
 
