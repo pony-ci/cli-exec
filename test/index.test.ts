@@ -70,29 +70,31 @@ describe('build, buildArgs and cmd', () => {
         expect(result2).to.eq('npm install --printCommand');
     });
 
-    it('non existing cwd', () => exec('npm', {
+    it('non existing cwd', async () => {
+        await exec('npm', {
             cwd: '/home/user/workspace/my-npm-project'
         }, 'install')
             .should.eventually.be
-            .rejectedWith('The specified cwd does not exist: /home/user/workspace/my-npm-project')
-    );
+            .rejectedWith('The specified cwd does not exist: /home/user/workspace/my-npm-project');
 
-    it('non existing cwd on cmd instance', () => {
+    });
+
+    it('non existing cwd on cmd instance', async () => {
         const npm = cmd('npm', {
             cwd: '/home/user/workspace/my-npm-project'
         });
-        npm.exec('install')
+        await npm.exec('install')
             .should.eventually.be
             .rejectedWith('The specified cwd does not exist: /home/user/workspace/my-npm-project');
     });
 
-    it('override cwd', () => {
+    it('override cwd', async () => {
         const npm = cmd('npm', {
             cwd: '/home/user/npm-project'
         });
-        npm.exec({
-                cwd: '/home/user/another-project'
-            }, 'install')
+        await npm.exec({
+            cwd: '/home/user/another-project'
+        }, 'install')
             .should.eventually.be
             .rejectedWith('The specified cwd does not exist: /home/user/another-project');
     });
